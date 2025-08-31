@@ -1,42 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* JIELEWE Design System - Child-friendly emotion tracking app */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Background System */
+    --background: 230 50% 98%;
+    --foreground: 210 20% 15%;
+    
+    /* Card System */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --card-foreground: 210 20% 15%;
+    
+    /* Primary Colors - Kid-friendly bright palette */
+    --primary: 207 90% 54%; /* Bright Blue */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 207 90% 70%;
+    
+    /* Emotion Colors */
+    --happy: 122 39% 49%; /* Apple Green */
+    --happy-foreground: 0 0% 100%;
+    --happy-glow: 122 39% 70%;
+    
+    --sad: 199 84% 55%; /* Sky Blue */
+    --sad-foreground: 0 0% 100%;
+    --sad-glow: 199 84% 75%;
+    
+    --angry: 4 90% 58%; /* Vibrant Red */
+    --angry-foreground: 0 0% 100%;
+    --angry-glow: 4 90% 75%;
+    
+    --neutral: 54 91% 68%; /* Sunshine Yellow */
+    --neutral-foreground: 210 20% 15%;
+    --neutral-glow: 54 91% 85%;
+    
+    /* Accent Colors */
+    --accent-pink: 340 82% 81%; /* Soft Pink */
+    --accent-mint: 140 31% 72%; /* Mint Green */
+    --accent-lavender: 261 51% 74%; /* Lavender Purple */
+    --accent-coral: 14 77% 62%; /* Coral Orange */
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-happy: linear-gradient(135deg, hsl(var(--happy)), hsl(var(--happy-glow)));
+    --gradient-sad: linear-gradient(135deg, hsl(var(--sad)), hsl(var(--sad-glow)));
+    --gradient-angry: linear-gradient(135deg, hsl(var(--angry)), hsl(var(--angry-glow)));
+    --gradient-neutral: linear-gradient(135deg, hsl(var(--neutral)), hsl(var(--neutral-glow)));
+    --gradient-rainbow: linear-gradient(135deg, hsl(var(--happy)), hsl(var(--primary)), hsl(var(--accent-lavender)), hsl(var(--accent-coral)));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+    --shadow-happy: 0 8px 25px -8px hsl(var(--happy) / 0.4);
+    --shadow-primary: 0 8px 25px -8px hsl(var(--primary) / 0.4);
+    
+    /* Animations */
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Component System */
+    --secondary: 140 31% 72%;
+    --secondary-foreground: 210 20% 15%;
+    --muted: 230 25% 95%;
+    --muted-foreground: 210 15% 60%;
+    --accent: 261 51% 74%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 90% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 25% 90%;
+    --input: 230 25% 95%;
+    --ring: 207 90% 54%;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +137,95 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-fredoka;
   }
+}
+
+/* Custom Component Styles for JIELEWE */
+@layer components {
+  /* Emotion Cards */
+  .emotion-card {
+    @apply rounded-3xl p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:scale-105 cursor-pointer;
+  }
+  
+  .emotion-card-happy {
+    @apply bg-gradient-to-br from-happy to-happy-glow text-happy-foreground shadow-[var(--shadow-happy)];
+  }
+  
+  .emotion-card-sad {
+    @apply bg-gradient-to-br from-sad to-sad-glow text-sad-foreground;
+  }
+  
+  .emotion-card-angry {
+    @apply bg-gradient-to-br from-angry to-angry-glow text-angry-foreground;
+  }
+  
+  .emotion-card-neutral {
+    @apply bg-gradient-to-br from-neutral to-neutral-glow text-neutral-foreground;
+  }
+  
+  /* Hero Section */
+  .hero-gradient {
+    @apply bg-gradient-to-br from-primary via-accent-mint to-accent-coral;
+  }
+  
+  /* Mascot Animations */
+  .mascot-bounce {
+    animation: mascot-bounce 2s ease-in-out infinite;
+  }
+  
+  .mascot-wiggle {
+    animation: mascot-wiggle 1s ease-in-out;
+  }
+  
+  /* Button Variants */
+  .btn-playful {
+    @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold text-lg shadow-[var(--shadow-soft)] transition-all duration-300 hover:scale-105 hover:shadow-[var(--shadow-primary)] active:scale-95;
+  }
+  
+  .btn-primary {
+    @apply btn-playful bg-gradient-to-r from-primary to-primary-glow text-primary-foreground;
+  }
+  
+  .btn-happy {
+    @apply btn-playful bg-gradient-to-r from-happy to-happy-glow text-happy-foreground;
+  }
+  
+  /* Journal Entry */
+  .journal-textarea {
+    @apply w-full rounded-3xl border-2 border-border bg-card p-6 text-lg resize-none focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all duration-300;
+  }
+  
+  /* Activity Cards */
+  .activity-card {
+    @apply rounded-3xl bg-card p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:scale-105 hover:shadow-[var(--shadow-primary)];
+  }
+}
+
+/* Keyframe Animations */
+@keyframes mascot-bounce {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes mascot-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+}
+
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
