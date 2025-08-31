@@ -49,10 +49,23 @@ const Index = () => {
   };
 
   const handleActivitySelect = (activityId: string) => {
+    // Switch to the activity and show the interactive activity
+    setActiveTab('activities');
     toast({
-      title: "Great choice! 🎉",
-      description: "That sounds like a wonderful activity to try!",
+      title: "Let's do this activity! 🎉",
+      description: "Have fun with your chosen activity!",
     });
+  };
+
+  const scrollToSection = (tabValue: string) => {
+    setActiveTab(tabValue);
+    // Small delay to ensure tab content is rendered before scrolling
+    setTimeout(() => {
+      const element = document.querySelector(`[data-tab="${tabValue}"]`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   // Transform journal entries for mood chart
@@ -66,7 +79,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Header */}
-      <div className="hero-gradient py-12 px-4">
+      <div className="relative py-12 px-4 overflow-hidden">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="https://videos.pexels.com/video-files/3196536/3196536-uhd_2732_1440_25fps.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-glow/90"></div>
+        <div className="relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <Mascot mood={currentMood} className="mb-6" />
@@ -82,7 +105,7 @@ const Index = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
               className="btn-happy text-lg px-8 py-6"
-              onClick={() => setActiveTab('journal')}
+              onClick={() => scrollToSection('journal')}
             >
               <BookOpen className="w-5 h-5 mr-2" />
               Start Journaling
@@ -90,12 +113,13 @@ const Index = () => {
             <Button 
               variant="outline" 
               className="bg-white/20 border-white/30 text-white hover:bg-white/30 text-lg px-8 py-6"
-              onClick={() => setActiveTab('learn')}
+              onClick={() => scrollToSection('learn')}
             >
               <GraduationCap className="w-5 h-5 mr-2" />
               Learn About Emotions
             </Button>
           </div>
+        </div>
         </div>
       </div>
 
@@ -121,19 +145,19 @@ const Index = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="journal" className="space-y-8">
+          <TabsContent value="journal" className="space-y-8" data-tab="journal">
             <JournalEntry onEntrySubmit={handleJournalSubmit} />
           </TabsContent>
 
-          <TabsContent value="chart" className="space-y-8">
+          <TabsContent value="chart" className="space-y-8" data-tab="chart">
             <MoodChart moodData={moodChartData} />
           </TabsContent>
 
-          <TabsContent value="activities" className="space-y-8">
+          <TabsContent value="activities" className="space-y-8" data-tab="activities">
             <ActivitySuggestions mood={currentMood} onActivitySelect={handleActivitySelect} />
           </TabsContent>
 
-          <TabsContent value="learn" className="space-y-8">
+          <TabsContent value="learn" className="space-y-8" data-tab="learn">
             <Card className="p-8 max-w-4xl mx-auto">
               <div className="text-center mb-8">
                 <div className="w-16 h-16 bg-gradient-to-r from-accent-lavender to-accent-coral rounded-full flex items-center justify-center mx-auto mb-4">
@@ -146,43 +170,55 @@ const Index = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  {
-                    emotion: 'Happy',
-                    emoji: '😊',
-                    color: 'from-happy to-happy-glow',
-                    description: 'Happiness makes us feel light and energetic! It happens when good things occur or when we do things we love.',
-                    tips: ['Share your happiness with others', 'Remember what made you happy', 'Do activities you enjoy']
-                  },
-                  {
-                    emotion: 'Sad',
-                    emoji: '😢',
-                    color: 'from-sad to-sad-glow',
-                    description: 'Sadness is a normal emotion that everyone feels sometimes. It helps us process difficult situations.',
-                    tips: ['Talk to someone you trust', 'Do gentle activities like reading', 'Remember that sad feelings will pass']
-                  },
-                  {
-                    emotion: 'Angry',
-                    emoji: '😡',
-                    color: 'from-angry to-angry-glow',
-                    description: 'Anger shows us when something isn\'t fair or right. It\'s important to express anger in healthy ways.',
-                    tips: ['Take deep breaths', 'Count to ten before reacting', 'Talk about what made you angry']
-                  },
-                  {
-                    emotion: 'Neutral',
-                    emoji: '😐',
-                    color: 'from-neutral to-neutral-glow',
-                    description: 'Feeling neutral or calm is peaceful! It\'s a great time to think about what you want to do next.',
-                    tips: ['Explore new activities', 'Check in with yourself', 'Enjoy the peaceful moment']
-                  }
-                ].map((item) => (
-                  <Card key={item.emotion} className="p-6">
-                    <div className={`bg-gradient-to-r ${item.color} rounded-2xl p-4 text-white mb-4`}>
-                      <div className="text-center">
-                        <div className="text-4xl mb-2">{item.emoji}</div>
-                        <h3 className="text-xl font-bold">{item.emotion}</h3>
+                  {[
+                    {
+                      emotion: 'Happy',
+                      emoji: '😊',
+                      color: 'from-happy to-happy-glow',
+                      description: 'Happiness makes us feel light and energetic! It happens when good things occur or when we do things we love.',
+                      tips: ['Share your happiness with others', 'Remember what made you happy', 'Do activities you enjoy'],
+                      video: 'https://videos.pexels.com/video-files/7710243/7710243-uhd_2560_1440_25fps.mp4'
+                    },
+                    {
+                      emotion: 'Sad',
+                      emoji: '😢',
+                      color: 'from-sad to-sad-glow',
+                      description: 'Sadness is a normal emotion that everyone feels sometimes. It helps us process difficult situations.',
+                      tips: ['Talk to someone you trust', 'Do gentle activities like reading', 'Remember that sad feelings will pass'],
+                      video: 'https://videos.pexels.com/video-files/7710266/7710266-uhd_2560_1440_25fps.mp4'
+                    },
+                    {
+                      emotion: 'Angry',
+                      emoji: '😡',
+                      color: 'from-angry to-angry-glow',
+                      description: 'Anger shows us when something isn\'t fair or right. It\'s important to express anger in healthy ways.',
+                      tips: ['Take deep breaths', 'Count to ten before reacting', 'Talk about what made you angry'],
+                      video: 'https://videos.pexels.com/video-files/7710245/7710245-uhd_2560_1440_25fps.mp4'
+                    },
+                    {
+                      emotion: 'Neutral',
+                      emoji: '😐',
+                      color: 'from-neutral to-neutral-glow',
+                      description: 'Feeling neutral or calm is peaceful! It\'s a great time to think about what you want to do next.',
+                      tips: ['Explore new activities', 'Check in with yourself', 'Enjoy the peaceful moment'],
+                      video: 'https://videos.pexels.com/video-files/7710247/7710247-uhd_2560_1440_25fps.mp4'
+                    }
+                  ].map((item) => (
+                    <Card key={item.emotion} className="p-6 overflow-hidden">
+                      <div className={`bg-gradient-to-r ${item.color} rounded-2xl p-4 text-white mb-4 relative overflow-hidden`}>
+                        <video 
+                          autoPlay 
+                          muted 
+                          loop 
+                          className="absolute inset-0 w-full h-full object-cover opacity-30"
+                        >
+                          <source src={item.video} type="video/mp4" />
+                        </video>
+                        <div className="relative z-10 text-center">
+                          <div className="text-4xl mb-2">{item.emoji}</div>
+                          <h3 className="text-xl font-bold">{item.emotion}</h3>
+                        </div>
                       </div>
-                    </div>
                     
                     <p className="text-sm text-muted-foreground mb-4">
                       {item.description}

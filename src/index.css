@@ -34,9 +34,9 @@
     --angry-foreground: 0 0% 100%;
     --angry-glow: 4 90% 75%;
     
-    --neutral: 54 91% 68%; /* Sunshine Yellow */
-    --neutral-foreground: 210 20% 15%;
-    --neutral-glow: 54 91% 85%;
+    --neutral: 220 10% 46%; /* Grey */
+    --neutral-foreground: 0 0% 100%;
+    --neutral-glow: 220 15% 65%;
     
     /* Accent Colors */
     --accent-pink: 340 82% 81%; /* Soft Pink */

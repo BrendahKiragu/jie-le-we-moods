@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { InteractiveActivity } from './InteractiveActivity';
 import { 
   Smile, 
   Heart, 
@@ -18,6 +20,26 @@ interface ActivitySuggestionsProps {
 }
 
 export const ActivitySuggestions = ({ mood, onActivitySelect }: ActivitySuggestionsProps) => {
+  const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
+
+  const handleActivityClick = (activityId: string) => {
+    setSelectedActivity(activityId);
+    onActivitySelect(activityId);
+  };
+
+  const handleActivityComplete = () => {
+    setSelectedActivity(null);
+  };
+
+  if (selectedActivity) {
+    return (
+      <InteractiveActivity 
+        activityId={selectedActivity} 
+        mood={mood} 
+        onComplete={handleActivityComplete}
+      />
+    );
+  }
   const getActivities = () => {
     switch (mood) {
       case 'happy':
@@ -90,8 +112,8 @@ export const ActivitySuggestions = ({ mood, onActivitySelect }: ActivitySuggesti
         {activities.map((activity) => (
           <Card 
             key={activity.id}
-            className="activity-card cursor-pointer border-2 border-transparent hover:border-primary/20"
-            onClick={() => onActivitySelect(activity.id)}
+            className="activity-card cursor-pointer border-2 border-transparent hover:border-primary/20 transition-all duration-200 hover:scale-105"
+            onClick={() => handleActivityClick(activity.id)}
           >
             <div className="flex items-start space-x-4">
               <div className={`w-12 h-12 bg-gradient-to-r ${color} rounded-xl flex items-center justify-center flex-shrink-0`}>
